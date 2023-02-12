@@ -2,13 +2,16 @@
 
 class EventsController < ApplicationController
   def index
+    
     @q = Event.future.ransack(params[:q])
     @events = @q.result(distinct: true).includes(:bookmarks, :prefecture, user: { avatar_attachment: :blob })
                 .order(created_at: :desc).page(params[:page])
+    
   end
 
   def future
     @q = Event.future.ransack(params[:q])
+    
     @events = @q.result(distinct: true).includes(:bookmarks, :prefecture, user: { avatar_attachment: :blob })
                 .order(held_at: :asc).page(params[:page])
     @search_path = future_events_path
@@ -27,18 +30,26 @@ class EventsController < ApplicationController
     @event = Event.new
   end
 
+
+
+
+
+
+
   def create
     @event = current_user.events.build(event_params)
     if @event.save
       User.all.find_each do |user|
         NotificationFacade.created_event(@event, user)
-      end
-
+    end
+  
       redirect_to event_path(@event)
     else
       render :new
     end
   end
+    
+  
 
   def show
     @event = Event.find(params[:id])
@@ -62,4 +73,8 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:title, :content, :held_at, :prefecture_id, :thumbnail, :only_woman)
   end
-end
+
+
+
+  end
+

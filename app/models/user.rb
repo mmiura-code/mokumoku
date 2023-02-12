@@ -33,6 +33,9 @@ class User < ApplicationRecord
   def owner?(event)
     event.user_id == id
   end
+  
+  
+
 
   def attend(event)
     event_attendances.find_or_create_by(event_id: event.id)
