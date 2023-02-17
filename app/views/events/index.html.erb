@@ -14,10 +14,10 @@
 
   <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
   
-  <%# 自分　%>
+  <%# 以下女性には女性と男子両方のイベント、それ以外は表示なし　%>
   
  <% if current_user.gender == 'woman' %>
- <%= render @events.only_woman %>
+ <%= render @events.only_woman && @events.not_only_woman %>
  <% else %>
  <%= render @events.not_only_woman %>
  <% end %>
