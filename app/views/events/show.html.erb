@@ -93,16 +93,31 @@
                               data: { confirm: 'キャンセルします' }
                   %>
                 <% else %>
-                
-                  <%= link_to 'このもくもく会に参加する',
+                <%#女性以外なら女性限定のイベントに参加するが表示されない実装　%>
+                  <% if  @event.only_woman == true && current_user.gender == 'woman' %>
+                   
+                  
+                 <%= link_to 'このもくもく会に参加する',
                               event_attendance_url(@event),
                               class: 'btn btn-primary',
                               method: :post,
                               data: { confirm: '申し込みます' }
   %>
+                  <% elsif @event.only_woman == false %>
 
-                <% end %>
+                  <%= link_to 'このもくもく会に参加する',
+                              event_attendance_url(@event),
+                              class: 'btn btn-primary',
+                              method: :post,
+                              data: { confirm: '申し込みます' }%>
+<%end%>
+
+
+
+                   <% end %> 
+
               <% end %>
+                     
             <% end %>
           </div>
         </div>
@@ -111,6 +126,10 @@
         <div class="card-header">
           <i class="bi bi-people"></i>
           参加者（<%= @event.attendees.size %>人）
+          
+                   
+           <%# (!current_user.gender == 'woman') &&  @event.only_woman == false %>
+           <%= current_user.gender %>
         </div>
         <div class="card-body">
            <ul class="list-unstyled">

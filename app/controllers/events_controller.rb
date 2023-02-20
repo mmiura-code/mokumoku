@@ -32,10 +32,6 @@ class EventsController < ApplicationController
 
 
 
-
-
-
-
   def create
     @event = current_user.events.build(event_params)
     if @event.save
@@ -53,6 +49,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    
+
   end
 
   def edit
