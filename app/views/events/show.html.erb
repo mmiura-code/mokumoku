@@ -42,6 +42,10 @@
         <div class="card-header">
           <i class="bi bi-info-circle"></i>
           イベントの説明
+          <%# いかif3女性限定の表示%>
+      <% if @event.only_woman %>
+      <p>女性限定</p>
+      <% end %>
         </div>
         <div class="card-body">
           <%= simple_format @event.content %>
@@ -93,8 +97,8 @@
                               data: { confirm: 'キャンセルします' }
                   %>
                 <% else %>
-                <%#女性以外なら女性限定のイベントに参加するが表示されない実装　%>
-                  <% if  @event.only_woman == true && current_user.gender == 'woman' %>
+                <%#女性以外なら女性限定のイベントに参加するが表示されない実装　2/22@event.only_woman == true &&ひっかかってるぽい%>
+                  <% if @event.only_woman == true && current_user.gender == 'woman'%>
                    
                   
                  <%= link_to 'このもくもく会に参加する',
@@ -103,14 +107,17 @@
                               method: :post,
                               data: { confirm: '申し込みます' }
   %>
-                  <% elsif @event.only_woman == false %>
+                  <% elsif current_user.gender == 'woman' || current_user.gender == 'man' || current_user.gender == 'other' && @event.only_woman == false %>
 
                   <%= link_to 'このもくもく会に参加する',
                               event_attendance_url(@event),
                               class: 'btn btn-primary',
                               method: :post,
-                              data: { confirm: '申し込みます' }%>
-<%end%>
+                              data: { confirm: '申し込みます' } %>
+
+
+
+                <%end%>
 
 
 
@@ -128,8 +135,7 @@
           参加者（<%= @event.attendees.size %>人）
           
                    
-           <%# (!current_user.gender == 'woman') &&  @event.only_woman == false %>
-           <%= current_user.gender %>
+           
         </div>
         <div class="card-body">
            <ul class="list-unstyled">

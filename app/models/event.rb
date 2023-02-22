@@ -15,7 +15,7 @@ class Event < ApplicationRecord
   scope :past, -> { where('held_at <= ?', Time.current) }
   #女性限定をスコープコントローラはindex
   scope :only_woman, -> { where(only_woman: true) }
-  scope :not_only_woman, -> { where(only_woman: false) }
+  
 
   with_options presence: true do
     validates :title

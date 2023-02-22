@@ -2,7 +2,7 @@
   <%#= render 'shared/error_messages', object: f.object %>
   <% if current_user.gender == 'woman' %>
   <div class="field">
-  <%= f.label :only_woman%>
+  <%= f.label :only_woman,'女性限定'%>
     <%= f.check_box :only_woman,checked:false %>
   </div>
   <% end %>
