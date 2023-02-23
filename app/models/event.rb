@@ -23,8 +23,6 @@ class Event < ApplicationRecord
     validates :held_at
   end
 
-
-
   def past?
     held_at < Time.current
   end
@@ -33,6 +31,4 @@ class Event < ApplicationRecord
     !past?
   end
 
-  
-  
 end

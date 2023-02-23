@@ -30,21 +30,12 @@ class User < ApplicationRecord
   scope :allowing_liked_event_notification,
         -> { joins(:notification_timings).merge(NotificationTiming.liked_event) }
 
-  #女性以外の性
-  scope :not_woman, -> { where(gender: 1 || 0) }
-  scope :woman, -> { where(gender: 2) }
+  #女性以外の性(womanか!woman?)
+  scope :not_woman, -> { where(gender: [User.statuses[:other], User.statuses[:man]]) }
+  scope :woman, -> { where(gender: [User.statuses[:woman]]) }
 
   def owner?(event)
     event.user_id == id
-  end
-  
-  
-  def not_woman
-    User.not_woman
-  end
-
-  def woman
-    User.woman
   end
 
   def attend(event)

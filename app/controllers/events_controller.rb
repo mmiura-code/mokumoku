@@ -30,8 +30,6 @@ class EventsController < ApplicationController
     @event = Event.new
   end
 
-
-
   def create
     @event = current_user.events.build(event_params)
     if @event.save
@@ -45,12 +43,8 @@ class EventsController < ApplicationController
     end
   end
     
-  
-
   def show
     @event = Event.find(params[:id])
-    
-
   end
 
   def edit
@@ -71,7 +65,6 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:title, :content, :held_at, :prefecture_id, :thumbnail, :only_woman)
   end
-
 
 
   end
